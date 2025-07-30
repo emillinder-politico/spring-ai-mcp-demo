@@ -1,0 +1,57 @@
+plugins {
+    id 'java'
+    id 'org.springframework.boot' version '3.5.3'
+    id 'io.spring.dependency-management' version '1.1.7'
+}
+
+group = 'com.millinder'
+version = '0.0.1-SNAPSHOT'
+
+java {
+    toolchain {
+        languageVersion = JavaLanguageVersion.of(17)
+    }
+}
+
+repositories {
+    mavenCentral()
+
+    maven {
+        name = 'Central Portal Snapshots'
+        url = 'https://central.sonatype.com/repository/maven-snapshots/'
+    }
+    maven {
+        name = 'Spring Snapshots'
+        url = 'https://repo.spring.io/snapshot'
+    }
+
+}
+
+ext {
+    // was having issues with chatgpt calling against 1.0.0
+    set('springAiVersion', "1.1.0-SNAPSHOT")
+}
+
+dependencies {
+//    implementation 'io.modelcontextprotocol.sdk:mcp'
+//    implementation 'io.modelcontextprotocol.sdk:mcp-spring-webflux'
+    implementation "org.springframework.ai:spring-ai-starter-mcp-server-webmvc:${springAiVersion}"
+//    implementation "org.springframework.ai:spring-ai-starter-mcp-server-webmvc:${springAiVersion}"
+    implementation 'org.springframework.boot:spring-boot-starter-actuator'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
+    implementation 'org.springframework.boot:spring-boot-starter-security'
+    testImplementation 'org.springframework.boot:spring-boot-starter-test'
+    testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+dependencyManagement {
+    imports {
+        mavenBom "org.springframework.ai:spring-ai-bom:${springAiVersion}"
+        mavenBom "io.modelcontextprotocol.sdk:mcp-bom:0.11.0-SNAPSHOT"
+    }
+}
+
+tasks.named('test') {
+    useJUnitPlatform()
+}
