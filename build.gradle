@@ -38,7 +38,7 @@ dependencies {
     implementation "org.springframework.ai:spring-ai-starter-mcp-server-webmvc:${springAiVersion}"
 //    implementation "org.springframework.ai:spring-ai-starter-mcp-server-webmvc:${springAiVersion}"
     implementation 'org.springframework.boot:spring-boot-starter-actuator'
-//    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
+    implementation 'org.springframework.boot:spring-boot-starter-oauth2-resource-server'
 //    implementation 'org.springframework.boot:spring-boot-starter-oauth2-authorization-server'
 //    implementation 'org.springframework.boot:spring-boot-starter-security'
     testImplementation 'org.springframework.boot:spring-boot-starter-test'

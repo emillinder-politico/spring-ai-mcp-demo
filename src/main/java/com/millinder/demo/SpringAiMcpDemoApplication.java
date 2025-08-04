@@ -6,6 +6,8 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.Bean;
 
+import java.util.List;
+
 @SpringBootApplication
 public class SpringAiMcpDemoApplication {
 
@@ -14,8 +16,8 @@ public class SpringAiMcpDemoApplication {
     }
 
     @Bean
-    public ToolCallbackProvider weatherTools(WordEncoderService encoderService) {
-        return MethodToolCallbackProvider.builder().toolObjects(encoderService).build();
+    public ToolCallbackProvider weatherTools(List<ExposedTool> tools) {
+        return MethodToolCallbackProvider.builder().toolObjects(tools.toArray()).build();
     }
 
 }
