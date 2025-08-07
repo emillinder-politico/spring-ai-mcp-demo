@@ -20,7 +20,6 @@ public class OAuthMetadataController {
     private String issuerUri;
 
     @GetMapping(path = {"/oauth-protected-resource", "/oauth-protected-resource/**"}, produces = MediaType.APPLICATION_JSON_VALUE)
-
     public Map<String, Object> getOAuthProtectedResourceMetadata(HttpServletRequest request) {
         Map<String, Object> metadata = new HashMap<>();
 
@@ -33,13 +32,9 @@ public class OAuthMetadataController {
         metadata.put("resource", baseUrl);
 
         // Authorization servers that can issue tokens for this resource
-            if (issuerUri != null) {
-                metadata.put("authorization_servers", List.of(baseUrl, issuerUri));
+        if (issuerUri != null) {
+            metadata.put("authorization_servers", List.of(issuerUri));
         }
-        //
-        //        // Add other metadata fields as needed
-        //        metadata.put("token_types_supported", List.of("jwt"));
-        //        metadata.put("token_introspection_endpoint", "https://your-introspection-endpoint");
 
         return metadata;
     }

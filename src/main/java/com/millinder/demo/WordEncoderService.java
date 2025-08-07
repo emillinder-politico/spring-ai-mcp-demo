@@ -5,7 +5,7 @@ import org.springframework.ai.tool.annotation.ToolParam;
 import org.springframework.stereotype.Service;
 
 @Service
-public class WordEncoderService implements ExposedTool{
+public class WordEncoderService implements ExposedTool {
     @Tool(name = "eric_encoder",
             description = "Encode input in eric format")
     public String doEricEncoding(@ToolParam(description = "The text to encode in eric format")

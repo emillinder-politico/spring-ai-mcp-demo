@@ -36,8 +36,8 @@ public class SecurityConfiguration {
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .authorizeHttpRequests(authorize -> authorize
-                        .requestMatchers(".well-known/**").permitAll()
-                        .anyRequest().permitAll() // Protect all requests by default
+                        .requestMatchers("/.well-known/**").permitAll()
+                        .anyRequest().authenticated() // Protect all requests by default
                 )
                 .oauth2ResourceServer(oauth2 -> oauth2
                         .jwt(jwt -> jwt.jwtAuthenticationConverter(jwtAuthenticationConverter())
@@ -54,10 +54,15 @@ public class SecurityConfiguration {
 
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS)
-                ).cors(Customizer.withDefaults());
+                )
+                .csrf(csrf -> csrf.disable())
+                .cors(Customizer.withDefaults());
         return http.build();
     }
 
+    /**
+     * Not useful when using spring-security-oauth2-authorization-server but leaving it for now
+     */
     private JwtAuthenticationConverter jwtAuthenticationConverter() {
         JwtAuthenticationConverter jwtConverter = new JwtAuthenticationConverter();
         jwtConverter.setJwtGrantedAuthoritiesConverter(new KeycloakRealmRoleConverter());
